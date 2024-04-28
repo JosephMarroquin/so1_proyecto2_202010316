@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-producer-rust
+  namespace: kafka
+spec:
+  selector:
+    matchLabels:
+      name: deploy-producer-rust
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: deploy-producer-rust
+    spec:
+      containers:
+      - name: producer
+        image: josephmarroquin/rust-server:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8081
+        env:
+        - name: PORT
+          valueFrom:
+            secretKeyRef:
+              name: secret-env-producer
+              key: PORT
+        - name: KAFKA_BROKERS
+          valueFrom:
+            secretKeyRef:
+              name: secret-env-producer
+              key: KAFKA_BROKERS
+      - name: producer-client
+        image: josephmarroquin/rust-client:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+      imagePullSecrets:
+        - name: dockerhubpull

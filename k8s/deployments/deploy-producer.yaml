@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-producer
+  namespace: kafka
+spec:
+  selector:
+    matchLabels:
+      name: deploy-producer
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: deploy-producer
+    spec:
+      containers:
+      - name: producer
+        image: josephmarroquin/grpc-server:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+        env:
+        - name: PORT
+          valueFrom:
+            secretKeyRef:
+              name: secret-env-producer
+              key: PORT
+        - name: KAFKA_BROKERS
+          valueFrom:
+            secretKeyRef:
+              name: secret-env-producer
+              key: KAFKA_BROKERS
+      - name: producer-client
+        image: josephmarroquin/grpc-client:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3001
+      imagePullSecrets:
+        - name: dockerhubpull
