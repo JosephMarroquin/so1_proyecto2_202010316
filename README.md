@@ -20,6 +20,9 @@ El objetivo principal es desarrollar un sistema eficiente y escalable que permit
 - Se despliegan pods para  gRPC, Wasm, Kafka, consumidor, Redis y MongoDB, organizados en distintos namespaces según la función.
 - Se configuran servicios para permitir la comunicación entre los distintos componentes.
 
+Graficas Grafana
+![image](https://github.com/JosephMarroquin/so1_proyecto2_202010316/assets/82687595/798c9616-e2ad-46af-8d46-f71fb2728f37)
+
 
 **Conclusiones:**
 - Concluimos que el servicio gRPC mostró un rendimiento superior en términos de tiempo de respuesta en comparación con el servicio Rust en este proyecto. Esta conclusión se basa en la observación de los tiempos de procesamiento de los datos enviados por ambos servicios a Kafka. La eficiencia y la baja latencia de gRPC son atribuibles a su arquitectura basada en protocol buffers y su implementación optimizada en Golang. Esto lo hace especialmente adecuado para escenarios donde se requiere una comunicación rápida y eficiente entre los distintos componentes de un sistema distribuido, como en este caso de procesamiento de votaciones en tiempo real.
